@@ -62,6 +62,11 @@ class Flutter extends Dart
             ],
             [
                 'scope'         => 'default',
+                'destination'   => '/lib/enums.dart',
+                'template'      => 'dart/lib/enums.dart.twig',
+            ],
+            [
+                'scope'         => 'default',
                 'destination'   => '/lib/permission.dart',
                 'template'      => 'dart/lib/permission.dart.twig',
             ],
@@ -327,8 +332,18 @@ class Flutter extends Dart
             ],
             [
                 'scope'         => 'default',
-                'destination'   => '.travis.yml',
-                'template'      => 'flutter/.travis.yml.twig',
+                'destination'   => '.github/workflows/publish.yml',
+                'template'      => 'flutter/.github/workflows/publish.yml.twig',
+            ],
+            [
+                'scope'         => 'default',
+                'destination'   => '.github/workflows/format.yml',
+                'template'      => 'flutter/.github/workflows/format.yml.twig',
+            ],
+            [
+                'scope'         => 'enum',
+                'destination'   => 'lib/src/enums/{{ enum.name | caseSnake }}.dart',
+                'template'      => 'dart/lib/src/enums/enum.dart.twig',
             ],
         ];
     }

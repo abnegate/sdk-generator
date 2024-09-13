@@ -86,6 +86,13 @@ class SDK
         ]);
 
         /**
+         * Add language-specific functions
+         */
+        foreach ($this->language->getFunctions() as $function) {
+            $this->twig->addFunction($function);
+        }
+
+        /**
          * Add language specific filters
          */
         foreach ($this->language->getFilters() as $filter) {
@@ -137,8 +144,8 @@ class SDK
         $this->twig->addFilter(new TwigFilter('caseArray', function ($value) {
             return (is_array($value)) ? json_encode($value) : '[]';
         }, ['is_safe' => ['html']]));
-        $this->twig->addFilter(new TwigFilter('typeName', function ($value) {
-            return $this->language->getTypeName($value);
+        $this->twig->addFilter(new TwigFilter('typeName', function ($value, $spec = []) {
+            return $this->language->getTypeName($value, $spec);
         }, ['is_safe' => ['html']]));
         $this->twig->addFilter(new TwigFilter('paramDefault', function ($value) {
             return $this->language->getParamDefault($value);
@@ -545,6 +552,7 @@ class SDK
                 'contactURL' => $this->spec->getContactURL(),
                 'contactEmail' => $this->spec->getContactEmail(),
                 'services' => $this->spec->getServices(),
+                'enums' => $this->spec->getEnums(),
                 'definitions' => $this->spec->getDefinitions(),
                 'global' => [
                     'headers' => $this->spec->getGlobalHeaders(),
@@ -632,6 +640,13 @@ class SDK
 
                             $this->render($template, $destination, $block, $params, $minify);
                         }
+                    }
+                    break;
+                case 'enum':
+                    foreach ($this->spec->getEnums() as $key => $enum) {
+                        $params['enum'] = $enum;
+
+                        $this->render($template, $destination, $block, $params, $minify);
                     }
                     break;
             }
