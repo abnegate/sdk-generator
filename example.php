@@ -508,7 +508,7 @@ try {
         ->setTwitter('appwrite_io')
         ->setDiscord('564160730845151244', 'https://appwrite.io/discord')
         ->setDefaultHeaders([
-            'x-appwrite-response-format' => '1.4.0',
+            'x-appwrite-response-format' => '1.6.0',
         ])
     ;
     $sdk->generate(__DIR__ . '/examples/crystal');
